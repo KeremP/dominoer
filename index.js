@@ -4,6 +4,7 @@ import figlet from 'figlet';
 
 import { getCustomerDetails, insepctMenu, selectAction } from './lib/prompter.js';
 import { MakeOrder } from './lib/order.js';
+import { Item } from 'dominos';
 
 
 
@@ -34,10 +35,23 @@ const main = async () => {
   if (action.action == "View menu"){
     const menu = await insepctMenu()
     console.log(menu.menu.preconfiguredProducts);
-  }else{
+  }else if(action.action == "View closest stores"){
     const stores = await order.findStores();
     console.log("Store ID:", stores[0]," ", "Distance:", stores[1])
+
+    console.log("\nAddress/Desc:\n", stores[2], "\nService Hours:", stores[3])
+  }else{
+
+    const pizza = new Item({
+        code:'14SCREEN',
+        options:{
+          P:{'1/1':'1'}
+        }
+    })
+    order.newOrder([pizza])
   }
+
+
 }
 
 
